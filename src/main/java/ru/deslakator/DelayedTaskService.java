@@ -12,7 +12,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Данная сервис обеспечивает поставновку Callable по LocalDateTime в
+ * Данный сервис обеспечивает поставновку Callable по LocalDateTime в
  * ExecutorService (по умолчанию Один поток на исполнение), который
  * передается через конструктор.
  *
