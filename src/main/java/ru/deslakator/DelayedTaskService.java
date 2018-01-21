@@ -12,7 +12,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Данная задача обеспечивает поставновку Callable по LocalDateTime в
+ * Данная сервис обеспечивает поставновку Callable по LocalDateTime в
  * ExecutorService (по умолчанию Один поток на исполнение), который
  * передается через конструктор.
  *
@@ -23,11 +23,15 @@ public class DelayedTaskService implements Runnable {
     private final DelayQueue<DelayTask> queue = new DelayQueue<>();
     private final ExecutorService execService;
 
+    /**
+     * По умолчанию создается однопоточный Executor для выполнения приходящих задач
+     */
     public DelayedTaskService() {
         this(Executors.newSingleThreadExecutor());
     }
 
     /**
+     * Можно задать Executor который будет выполнять задачи
      *
      * @param execService ExecutorService выполняющий задачи
      */
@@ -57,6 +61,9 @@ public class DelayedTaskService implements Runnable {
         }
     }
 
+    /**
+     * Вспомогательный класс который отвечает за логику сортировки задач
+     */
     static class DelayTask implements Delayed {
 
         private final static AtomicLong sequenceGen = new AtomicLong(0);
@@ -67,7 +74,7 @@ public class DelayedTaskService implements Runnable {
         @NotNull
         final Callable callable;
 
-        public DelayTask(@NotNull LocalDateTime time, @NotNull Callable callable) {
+        DelayTask(@NotNull LocalDateTime time, @NotNull Callable callable) {
             if (time == null || callable == null) {
                 throw new IllegalArgumentException("time and callable must be NotNull");
             }
